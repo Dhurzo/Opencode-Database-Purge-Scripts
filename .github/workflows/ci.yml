@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sqlite3 shellcheck
+
+      - name: Shellcheck (errors only)
+        run: shellcheck --severity=error opencode-cleanup.sh opencode-purge-launcher.sh test/run-tests.sh
+
+      - name: Bash syntax
+        run: |
+          bash -n opencode-cleanup.sh
+          bash -n opencode-purge-launcher.sh
+          bash -n test/run-tests.sh
+
+      - name: Node syntax
+        run: node --check plugin/index.js
+
+      - name: Tests
+        run: bash test/run-tests.sh

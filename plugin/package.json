@@ -1,0 +1,10 @@
+{
+  "name": "opencode-purge",
+  "version": "1.2.0",
+  "description": "Purge old OpenCode conversations and compact the SQLite DB via a detached close→clean→relaunch watcher.",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "@opencode-ai/plugin": "^1.4.7"
+  }
+}
