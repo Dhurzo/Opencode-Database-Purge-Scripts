@@ -405,18 +405,24 @@ Flow:
 
 ## Similar projects on GitHub
 
-| Project | Type | Key difference from this one |
-|---|---|---|
-| [jeffusion/opencode-sweeper](https://github.com/jeffusion/opencode-sweeper) | Plugin | Deletes expired sessions via the SDK while OpenCode runs; **does not close the app or VACUUM** (the file does not shrink). |
-| [whtsky/ocgc](https://github.com/whtsky/ocgc) | CLI (garbage collector) | Purges by age/size, orphans, snapshots, `strip-reasoning`; runs outside the TUI. |
-| [chncaesar/opencode-db-clean](https://github.com/chncaesar/opencode-db-clean) | Python CLI (`ocdbc`) | Safe VACUUM sequence (backup + `integrity_check` + `auto_vacuum`); does not delete sessions by age. |
-| [v587d/opencode-helper](https://github.com/v587d/opencode-helper) | Python CLI (Windows) | Session deletion + VACUUM with a protected-session list. |
+The opencode community has built several tools that solve related problems.
+We are leaving them here in case one of them fits your workflow better—there
+is no single right answer, and the best tool is the one that works for you:
 
-**None of them completes the full cycle from inside the TUI**: close OpenCode →
-delete old sessions + orphans → `VACUUM` (the file really shrinks) → reopen.
-That is the gap this project fills.
+| Project | Type | What it does |
+|---|---|---|
+| [jeffusion/opencode-sweeper](https://github.com/jeffusion/opencode-sweeper) | Plugin | Deletes expired sessions via the SDK while OpenCode runs. It does not close the app or run `VACUUM`, so the file itself does not shrink. |
+| [whtsky/ocgc](https://github.com/whtsky/ocgc) | CLI (garbage collector) | Purges by age/size, cleans orphans, takes snapshots, and supports `strip-reasoning`. It runs outside the TUI. |
+| [chncaesar/opencode-db-clean](https://github.com/chncaesar/opencode-db-clean) | Python CLI (`ocdbc`) | Runs a safe VACUUM sequence (backup + `integrity_check` + `auto_vacuum`). It does not delete sessions by age. |
+| [v587d/opencode-helper](https://github.com/v587d/opencode-helper) | Python CLI (Windows) | Deletes sessions and runs `VACUUM`, with a protected-session list. |
+
+This project focuses on one specific workflow: the complete cycle from inside
+the TUI—close OpenCode → delete old sessions and orphans → `VACUUM` (so the
+file really shrinks) → reopen. If you would rather use a lightweight plugin, a
+standalone CLI, or a Windows-focused tool, one of the projects above may suit
+you better.
 
 > opencode upstream has no built-in cleanup (issue
-> [#4980](https://github.com/sst/opencode/issues/4980)); DB bloat is a known
+> [#4980](https://github.com/sst/opencode/issues/4980)), and DB bloat is a known
 > problem ([#16101](https://github.com/sst/opencode/issues/16101),
 > [#31526](https://github.com/sst/opencode/issues/31526)).
